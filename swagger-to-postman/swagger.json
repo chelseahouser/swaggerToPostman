@@ -10,10 +10,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"type": "array",
-								"items": {
-									"$ref": "#/components/schemas/CreateCollection"
-								}
+								"$ref": "#/components/schemas/CreateCollection"
 							}
 						}
 					}
@@ -34,10 +31,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"type": "array",
-								"items": {
-									"$ref": "#/components/schemas/UpdateCollection"
-								}
+								"$ref": "#/components/schemas/UpdateCollection"
 							}
 						}
 					}
