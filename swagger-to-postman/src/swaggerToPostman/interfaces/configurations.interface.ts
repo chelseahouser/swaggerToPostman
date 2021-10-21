@@ -1,5 +1,5 @@
-import {CreateCollection} from '../dto/create.dto';
-import {UpdateCollection} from '../dto/update.dto';
+import { CreateCollection } from '../dto/create.dto';
+import { UpdateCollection } from '../dto/update.dto';
 
 export class Configurations {
   constructor(config: CreateCollection | UpdateCollection) {
@@ -13,14 +13,16 @@ export class Configurations {
     }
   }
 
-    baseUrls: string[];
-    authenticationMethod: string;
-    postmanAPIKey: string;
-    swaggerUrls: string[];
-    collectionId: string | undefined;
-    workspaceId: string;
+  baseUrls: string[];
+  authenticationMethod: string;
+  postmanAPIKey: string;
+  swaggerUrls: string[];
+  collectionId: string | undefined;
+  workspaceId: string;
 
-    isUpdate(config: CreateCollection | UpdateCollection): config is UpdateCollection {
-      return (config as UpdateCollection).collectionId !== undefined;
-    }
+  isUpdate(
+    config: CreateCollection | UpdateCollection,
+  ): config is UpdateCollection {
+    return (config as UpdateCollection).collectionId !== undefined;
+  }
 }

@@ -1,8 +1,8 @@
 {
   "name": "swagger-to-postman",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "This is an api to import swagger documentation to postman collections.",
+  "author": "chouser",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
