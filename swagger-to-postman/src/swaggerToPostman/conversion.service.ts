@@ -1,24 +1,18 @@
 import { Injectable } from '@nestjs/common';
+import { Configurations } from './interfaces/configurations.interface';
 import { PostmanData } from './interfaces/postman.interface';
 import { SwaggerData } from './interfaces/swagger.interface';
 
 @Injectable()
 export class ConversionService {
-  convertAndModify(data: string): string {
-    PostmanData collection = this.convert(data);
-    collection = this.modify(collection);
-    return JSON.stringify(collection);
-  }
-
-  // this will conver the swagger format to postman format
-  private convert(data: string): PostmanData {
-    // convert swagger to postman format
-    SwaggerData swagger = JSON.parse(data) as SwaggerData;
-    return new PostmanData(SwaggerData);
+  convertAndModify(data: SwaggerData, configs: Configurations): PostmanData {
+    var collection = new PostmanData(data, configs.collectionId);
+    collection = this.modify(collection, configs);
+    return collection;
   }
 
   // This will add additional information to the collection
-  private modify(collection: string): PostmanData{
+  private modify(collection: PostmanData, configs: Configurations): PostmanData{
       // add swagger call
 
       // update authentication

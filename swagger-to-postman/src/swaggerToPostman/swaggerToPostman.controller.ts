@@ -1,5 +1,8 @@
-import { Controller, Param, Post, Put } from '@nestjs/common';
+import { Controller, Post, Put } from '@nestjs/common';
 import { ConversionService } from './conversion.service';
+import { CreateCollection } from './dto/create.dto';
+import { UpdateCollection } from './dto/update.dto';
+import { Configurations } from './interfaces/configurations.interface';
 import { PostmanService } from './postman.service';
 import { SwaggerService } from './swagger.service';
 
@@ -12,23 +15,25 @@ export class SwaggerToPostmanController {
   ) {}
 
   @Post(':swaggerUrl')
-  createCollection(@Param() params): void {
+  createCollection(create: CreateCollection): void {
     var id = "new guid identifier";
+    var config = new Configurations(create, id);
     // pull in data
-    var data = this.swaggerService.fetch(params.url);
+    var data = this.swaggerService.fetch(config.url);
     // convert to postman collection
-    var collection = this.conversionService.convertAndModify(data);
+    var collection = this.conversionService.convertAndModify(data, config);
     // save
-    this.postmanService.create(collection, id);
+    this.postmanService.create(collection, config.collectionId);
   }
 
   @Put(':collectionId/:swaggerUrl')
-  updateCollection(url: any, id: any): void {
+  updateCollection(update: UpdateCollection): void {
+      var config = new Configurations(update);
       // pull in data
-      var swaggerJson = this.swaggerService.fetch(url);
+      var data = this.swaggerService.fetch(config.url);
       // convert swagger
-      var collection = this.conversionService.convertAndModify(swaggerJson);
+      var collection = this.conversionService.convertAndModify(data, config);
       // save
-      this.postmanService.update(collection, id);
+      this.postmanService.update(collection, config.collectionId);
   }
 }
