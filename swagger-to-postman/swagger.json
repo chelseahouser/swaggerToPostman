@@ -1,0 +1,140 @@
+{
+	"openapi": "3.0.0",
+	"paths": {
+		"/swaggerToPostman/{swaggerUrl}": {
+			"post": {
+				"operationId": "SwaggerToPostmanController_createCollection",
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "array",
+								"items": {
+									"$ref": "#/components/schemas/CreateCollection"
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": ""
+					}
+				}
+			}
+		},
+		"/swaggerToPostman/{collectionId}/{swaggerUrl}": {
+			"put": {
+				"operationId": "SwaggerToPostmanController_updateCollection",
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "array",
+								"items": {
+									"$ref": "#/components/schemas/UpdateCollection"
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": ""
+					}
+				}
+			}
+		}
+	},
+	"info": {
+		"title": "Swagger to Postman",
+		"description": "This is an api to import swagger documentation to postman collections.",
+		"version": "1.0",
+		"contact": {}
+	},
+	"tags": [
+		{
+			"name": "swagger-to-postman",
+			"description": ""
+		}
+	],
+	"servers": [],
+	"components": {
+		"schemas": {
+			"CreateCollection": {
+				"type": "object",
+				"properties": {
+					"baseUrls": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"authenticationMethod": {
+						"type": "string"
+					},
+					"postmanAPIKey": {
+						"type": "string"
+					},
+					"swaggerUrls": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"workspaceId": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"baseUrls",
+					"authenticationMethod",
+					"postmanAPIKey",
+					"swaggerUrls",
+					"workspaceId"
+				]
+			},
+			"UpdateCollection": {
+				"type": "object",
+				"properties": {
+					"baseUrls": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"authenticationMethod": {
+						"type": "string"
+					},
+					"postmanAPIKey": {
+						"type": "string"
+					},
+					"swaggerUrls": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"collectionId": {
+						"type": "string"
+					},
+					"workspaceId": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"baseUrls",
+					"authenticationMethod",
+					"postmanAPIKey",
+					"swaggerUrls",
+					"collectionId",
+					"workspaceId"
+				]
+			}
+		}
+	}
+}

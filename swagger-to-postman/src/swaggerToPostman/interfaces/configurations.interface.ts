@@ -2,24 +2,23 @@ import { CreateCollection } from "../dto/create.dto";
 import { UpdateCollection } from "../dto/update.dto";
 
 export class Configurations {
-    constructor(config: CreateCollection | UpdateCollection, id: string = null){
+    constructor(config: CreateCollection | UpdateCollection){
         this.baseUrls = config.baseUrls;
         this.authenticationMethod = config.authenticationMethod;
         this.postmanAPIKey = config.postmanAPIKey;
-        this.url = config.url;
+        this.swaggerUrls = config.swaggerUrls;
+        this.workspaceId = config.workspaceId;
         if(this.isUpdate(config)){
             this.collectionId = config.collectionId;
-        }
-        else {
-            this.collectionId = id;
         }
     }
 
     baseUrls: string[];
     authenticationMethod: string;
     postmanAPIKey: string;
-    url: string;
-    collectionId: string;
+    swaggerUrls: string[];
+    collectionId: string | undefined;
+    workspaceId: string;
 
     isUpdate(config: CreateCollection | UpdateCollection): config is UpdateCollection {
         return (config as UpdateCollection).collectionId !== undefined;

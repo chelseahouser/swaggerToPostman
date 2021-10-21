@@ -1,19 +1,8 @@
-import { SwaggerData } from "./swagger.interface";
 export class PostmanData {
-    constructor( swagger: SwaggerData, id: string){
-        this.info._postman_id = id;
-        this.info.name = swagger.info.title;
-        this.info.description = swagger.info.description;
-        swagger.paths.forEach(path => {
-            
-        });
-    }
-
     info: info;
-    item: item[];
+    item: items[];
     event: event[];
     variable: variable[];
-
 }
 
 class info {
@@ -23,10 +12,14 @@ class info {
     schema: string;
 }
 
+class items {
+    name: string;
+    item: item;
+}
+
 class item {
     name: string;
     request: request;
-    response: response;
 }
 
 class request {
@@ -34,6 +27,7 @@ class request {
     header: header[];
     body: body;
     url: url;
+    description: string;
 }
 
 class header {
@@ -43,24 +37,13 @@ class header {
 
 class body {
     mode: string;
-    // ???
+    raw: string;
 }
 
 class url {
     raw: string;
     host: string[];
     path: string[];
-}
-
-class response {
-    name: string;
-    originalRequest: request;
-    status: string;
-    code: number;
-    _postman_previewlanguage: string;
-    header: header[];
-    cookie: string[];
-    body: string;
 }
 
 class event {
