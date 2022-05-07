@@ -1,6 +1,6 @@
 import { Body, Controller, Post, Put } from '@nestjs/common';
 import { ApiBody, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
-import { ConversionService } from './conversion.service';
+import { SwaggerService } from './swagger.service';
 import { CreateCollection } from './dto/create.dto';
 import { UpdateCollection } from './dto/update.dto';
 import { Configurations } from './interfaces/configurations.interface';
@@ -11,7 +11,7 @@ import { PostmanService } from './postman.service';
 export class SwaggerToPostmanController {
   constructor(
     private readonly postmanService: PostmanService,
-    private readonly conversionService: ConversionService,
+    private readonly swaggerService: SwaggerService,
   ) {}
 
   @Post(':swaggerUrl')
@@ -25,10 +25,10 @@ export class SwaggerToPostmanController {
   })
   createCollection(@Body() create: CreateCollection): void {
     const config = new Configurations(create);
-    // convert to postman collection
-    const collection = this.conversionService.convertAndModify(config);
+    // fetch swagger documentation
+    var swaggerDocs = this.swaggerService.readSwaggerDocs(create.swaggerUrls);
     // save
-    this.postmanService.create(collection, config);
+    this.postmanService.create(swaggerDocs, config);
   }
 
   @Put(':collectionId/:swaggerUrl')
@@ -43,8 +43,8 @@ export class SwaggerToPostmanController {
   updateCollection(@Body() update: UpdateCollection): void {
     const config = new Configurations(update);
     // convert swagger
-    const collection = this.conversionService.convertAndModify(config);
+    const swaggerDocs = this.swaggerService.readSwaggerDocs(update.swaggerUrls);
     // save
-    this.postmanService.update(collection, config);
+    this.postmanService.update(swaggerDocs, config);
   }
 }

@@ -1,35 +1,49 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# About
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This project will be a simple nestjs app that will automate the process from creating a nestjs api to building and running integration tests.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Goal
 
-## Description
+The goal of this work is to create an automated pipeline that can detect changes in a controller action compiled into swagger documentation, import the swagger documentation into postman, have postman automatically build the happy path integration tests, then auto-run the integration tests in jenkins.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Technologies
+
+- NestJS API: <https://nestjs.com/>
+- Swagger: <https://swagger.io/>
+- Postman: <https://www.postman.com/>
+- Jenkins: <https://www.jenkins.io/>
+
+## Step 1: Build Swagger Documentation
+
+Compile a NestJS API into Swagger JSON format to generate a url with the api documentation.
+
+One of the advantages of making our imports to postman from the swagger url is that the swagger documentation has been standardized making our remaining process language agnostic.
+
+<https://docs.nestjs.com/openapi/introduction>
+
+To start this proof of concept, I am building a basic NestJS api and importing the swagger npm project to build the swagger response. The above link shows the instructions for setting this up. Running locally my api can be accessed at <http://localhost:3000/> and my swagger documentation is available at <http://localhost:3000/api/>. Now for importing into postman we will want to build the api into a json format which can be accessed locally at <http://localhost:3000/api-json>.
+
+For my proof of concept, I am going to build a basic library/book tracking api. So we will have options for basic crud on a book object.
+
+Swagger.json output for the initial version: ~/auto-nest-api/swagger.json
+
+## Step 2: Auto Import into Postman
+
+Now the base feature we are looking for does not actually exist to have postman auto-sync the api. A manual process would be to go to file -> import -> link, and import your api with the swagger link.
+
+An export of our api: ~/auto-nest-api/API.postman_collection
+
+For this step it appears postman has an api that may be of use. <https://www.postman.com/postman/workspace/postman-public-workspace/example/12959542-0822faf0-ac98-444f-b68b-dc7b175a5d3a>
+With the correct api configuration we could set up a batch job or as part of the build/deploy process that just calls the api to import.
+
+Potentially outdated as this is from 4 years ago, but could be a great start for getting into the automation for this step: <https://blog.postman.com/sync-your-specs/>
+
+Postman Commands shared at: <https://www.getpostman.com/collections/072e1a451943307b9241>
 
 ## Installation
 
 ```bash
-$ npm install
+npm install
 ```
 
 ## Running the app
@@ -57,16 +71,6 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 

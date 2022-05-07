@@ -1,7 +1,6 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { Configurations } from './interfaces/configurations.interface';
-import { PostmanData } from './interfaces/postman.interface';
 
 // This service will handle ajax calls to the postman api for creating and deleting collections.
 @Injectable()
@@ -10,7 +9,7 @@ export class PostmanService {
   PostmanURL = 'https://api.getpostman.com/collections';
 
   // Stupid update, this will delete and re-create the postman collection.
-  update(collection: PostmanData, configs: Configurations): void {
+  update(swaggerDocs: any[], configs: Configurations): void {
     this.httpService.delete(this.PostmanURL + '/' + configs.collectionId, {
       auth: {
         username: 'X-API-Key',
@@ -18,14 +17,14 @@ export class PostmanService {
       },
     });
 
-    this.create(collection, configs);
+    this.create(swaggerDocs, configs);
   }
 
   // create collection in postman
-  create(collection: PostmanData, configs: Configurations): void {
+  create(swaggerDocs: any[], configs: Configurations): void {
     this.httpService.post(
       this.PostmanURL + '?workspace=' + configs.workspaceId,
-      collection,
+      swaggerDocs,
       {
         auth: {
           username: 'X-API-Key',

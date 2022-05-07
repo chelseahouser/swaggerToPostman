@@ -1,7 +1,12 @@
+import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
-import { SwaggerToPostmanModule } from './swaggerToPostman/swaggerToPostman.module';
+import { PostmanService } from './swaggerToPostman/postman.service';
+import { SwaggerService } from './swaggerToPostman/swagger.service';
+import { SwaggerToPostmanController } from './swaggerToPostman/swaggerToPostman.controller';
 
 @Module({
-  imports: [SwaggerToPostmanModule],
+  imports: [HttpModule],
+  controllers: [SwaggerToPostmanController],
+  providers: [PostmanService, SwaggerService],
 })
 export class AppModule {}
